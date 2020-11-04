@@ -52,6 +52,37 @@ const Project = function(projectName, todos) {
 };
 
 // DOM module
+const dom = (function() {
+  // module which manipulates all the DOM for the application
+
+  // get major DOM elements and stores as vars
+  const root = document.getElementById('root');
+  const projectsContainer = document.getElementById('projects-container');
+  const todosConatainer = document.getElementById('todos-container');
+
+  const addProject = function() {
+    // brings up form for new project, adds it to the list, and updates the DOM
+  }
+
+  const removeProject = function() {
+    // deletes the project from the projects list and updates DOM
+  }
+
+  const addTodo = function() {
+    // brings up form for new todo, adds it to the list, and updates the DOM
+  }
+
+  const removeTodo = function() {
+    // deletes the todo from that projects todos list and updates DOM
+  }
+
+  return {
+    addProject,
+    removeProject,
+    addTodo,
+    removeTodo
+  }
+})();
 
 // app module
 const app = (function () {
