@@ -110,9 +110,21 @@ const app = (function () {
     });
   }
 
+  const addTodo = function(todo, project) {
+    // adds a new todo to the project
+    project.addTodo(todo);
+  }
+
+  const removeTodo = function(todo, project) {
+    // deletes the todo from that projects
+    project.removeTodo(todo);
+  }
+
   return {
     addProject,
     removeProject,
+    addTodo,
+    removeTodo,
     projects
   }
 })();
