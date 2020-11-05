@@ -95,6 +95,24 @@ const app = (function () {
 
   defaultProject.getTodos();
   defaultProject.removeTodo(todo2);
-  console.log(defaultProject.getTodos());
 
+  const addProject = function(newProject) {
+    // adds a project it to the list of projects
+    projects.push(newProject);
+  }
+
+  const removeProject = function(project) {
+    // deletes the project from the projects list
+    projects.forEach((value, index) => {
+      if (value === project) {
+        projects.splice(index, 1);
+      }
+    });
+  }
+
+  return {
+    addProject,
+    removeProject,
+    projects
+  }
 })();
