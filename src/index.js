@@ -19,7 +19,8 @@ const Todo = function(title, description, dueDate, priority, notes, checklist) {
 
 // factory function for create projects
 const Project = function(projectName, todos) {
-  const _projectName = projectName;
+  projectName;
+  
   let _todos = [];
   // check if todos is an array object, wrap it in an array if not
   if (Array.isArray(todos)) {
@@ -45,6 +46,7 @@ const Project = function(projectName, todos) {
   const getTodos = function() { return _todos };
 
   return {
+    projectName,
     addTodo,
     removeTodo,
     getTodos
@@ -60,12 +62,28 @@ const dom = (function() {
   const projectsContainer = document.getElementById('projects-container');
   const todosConatainer = document.getElementById('todos-container');
 
-  const addProject = function() {
-    // brings up form for new project, adds it to the list, and updates the DOM
+  const _updateProjectsDOM = function() {
+    // refreshes the projects container with all projects in the app
+    console.log('updated projects DOM');
   }
 
-  const removeProject = function() {
+  const _updateTodosDOM = function() {
+    // refreshes the projects container with all the todos for the currently selected project
+  }
+
+  const addProject = function() {
+    // brings up form for new project, adds it to the list, and updates the DOM
+    const project = Project('sample project', {name: 'sample-todo'});
+    // FIXME: replace with new project from form
+    app.addProject(project);
+    _updateProjectsDOM();
+  }
+
+  const removeProject = function(projectName) {
     // deletes the project from the projects list and updates DOM
+    const project = app.findProject(projectName)
+    app.removeProject(project);
+    _updateProjectsDOM();
   }
 
   const addTodo = function() {
@@ -93,8 +111,16 @@ const app = (function () {
   const defaultProject = Project('myProject', test);
   const projects = [defaultProject];
 
-  defaultProject.getTodos();
-  defaultProject.removeTodo(todo2);
+  const findProject = function(projectName) {
+    // finds and returns the first project object matching the projectName
+    // returns null if not found
+    for (let project of projects) {
+      if (project.projectName === projectName) {
+        return project
+      }
+    }
+    return null;
+  }
 
   const addProject = function(newProject) {
     // adds a project it to the list of projects
@@ -121,6 +147,7 @@ const app = (function () {
   }
 
   return {
+    findProject,
     addProject,
     removeProject,
     addTodo,
@@ -128,3 +155,10 @@ const app = (function () {
     projects
   }
 })();
+
+// all code below this is for testing
+const project = Project('hello', {name: 'hello'});
+dom.addProject();
+for (let project of app.projects) {
+  console.log(project)
+}
