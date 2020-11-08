@@ -1,6 +1,6 @@
 // factory function for create projects
 const Project = function(projectName, todos) {
-  projectName;
+  projectName = projectName.toString();
   
   let _todos = [];
   // check if todos is an array object, wrap it in an array if not
