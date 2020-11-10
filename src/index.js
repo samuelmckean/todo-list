@@ -15,8 +15,17 @@ const domModifier = (function() {
   let currentSelectedProject = projectList[0];  // start with first project as selected
   let todoList = currentSelectedProject.getTodos();
 
-  const _updatedSelectedProject = function() {
+  const _updateSelectedProject = function() {
     // updates which project is the current selected project in DOM
+    const projectElements = projectContainer.getElementsByClassName('project');
+    for (let i = 0 ; i < projectElements.length; i++) {
+      if (projectElements[i].innerHTML === currentSelectedProject.projectName) {
+        projectElements[i].classList.add('selected-project');
+      } else {
+        projectElements[i].classList.remove('selected-project');
+      }
+      console.log(projectElements[i].classList);
+    }
   }
 
   const _updateProjectsDOM = function() {
@@ -29,6 +38,7 @@ const domModifier = (function() {
       element.classList.add('project');
       projectContainer.append(element);
     }
+    _updateSelectedProject();
   }
 
   const _updateTodosDOM = function() {
@@ -61,6 +71,9 @@ const domModifier = (function() {
 
   // update todos for selected project in DOM to start
   _updateTodosDOM();
+
+  // update selected project in DOM to start
+  _updateSelectedProject();
 
   return {
     addProject,
