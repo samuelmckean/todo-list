@@ -41,7 +41,7 @@ const domModifier = (function() {
   }
 
   const _initializeProjects = function() {
-    // refreshes the projects container with all projects in the app
+    // initializes the projects container with all projects in the app
     projectsContainer.replaceChildren();
     for (let project of projectList) {
       // create HTML element for each project and push onto array
@@ -58,9 +58,10 @@ const domModifier = (function() {
     // refreshes the projects container with all the todos for the currently selected project
   }
 
-  const addProject = function(newProject) {
+  const addProject = function() {
     // brings up form for new project, adds it to the list, and updates the DOM
-    // FIXME: replace with new project from form
+    // FIXME: replace prompt with new project form
+    const newProject = Project(prompt('Enter new project name'))
     app.addProject(newProject);
 
     // create HTML element for new project and append it to projectsContainer
@@ -85,6 +86,9 @@ const domModifier = (function() {
     // deletes the todo from that projects todos list and updates DOM
   }
 
+  // wire up event listener for Add Project button
+  document.getElementById('add-project').addEventListener('click', addProject);
+
   // update project list in DOM to start
   _initializeProjects();
 
@@ -101,7 +105,3 @@ const domModifier = (function() {
     removeTodo
   }
 })();
-
-// all code below this is for testing
-const project = Project('hello', {name: 'hello'});
-domModifier.addProject(project);
