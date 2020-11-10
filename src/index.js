@@ -38,6 +38,20 @@ const domModifier = (function() {
   const _projectHover = function() {
     // displays trashcan icon for delete when hovering over a project
     
+    // create button
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-project';
+
+    // create img element
+    const trashIcon = document.createElement('img');
+    trashIcon.src = 'images/trash-icon.png';
+    deleteButton.append(trashIcon);
+    this.append(deleteButton);
+  }
+
+  const _projectUnhover = function() {
+    // removes delete button
+    document.getElementById('delete-project').remove();
   }
 
   const _initializeProjects = function() {
@@ -50,6 +64,8 @@ const domModifier = (function() {
       element.classList.add('project');
       projectsContainer.append(element);
       element.addEventListener('click', _projectClicked);
+      element.addEventListener('mouseenter', _projectHover);
+      element.addEventListener('mouseleave', _projectUnhover);
     }
     _updateSelectedProject();
   }
@@ -69,6 +85,8 @@ const domModifier = (function() {
     element.innerHTML = newProject.projectName;
     element.classList.add('project');
     element.addEventListener('click', _projectClicked);
+    element.addEventListener('mouseenter', _projectHover);
+    element.addEventListener('mouseleave', _projectUnhover);
     projectsContainer.append(element);
   }
 
