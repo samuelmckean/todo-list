@@ -7,7 +7,7 @@ const domModifier = (function() {
   // module which manipulates all the DOM for the application
 
   // get major DOM elements and stores as vars
-  const projectContainer = document.getElementById('projects-container');
+  const projectsContainer = document.getElementById('projects-container');
   const todosContainer = document.getElementById('todos-container');
 
   // initialize project and todos list from app
@@ -15,28 +15,41 @@ const domModifier = (function() {
   let currentSelectedProject = projectList[0];  // start with first project as selected
   let todoList = currentSelectedProject.getTodos();
 
+  // get list of all project elements
+  const projectElements = projectsContainer.getElementsByClassName('project');
+
+  const _projectClicked = function() {
+    // update currentSelectedProject with the clicked project
+    const clickedProjectName = this.innerHTML;
+    for (let i = 0; i < projectList.length; i++) {
+      if (clickedProjectName === projectList[i].projectName) {
+        currentSelectedProject = projectList[i];
+      }
+    }
+    _updateSelectedProject();
+  }
+
   const _updateSelectedProject = function() {
     // updates which project is the current selected project in DOM
-    const projectElements = projectContainer.getElementsByClassName('project');
     for (let i = 0 ; i < projectElements.length; i++) {
       if (projectElements[i].innerHTML === currentSelectedProject.projectName) {
         projectElements[i].classList.add('selected-project');
       } else {
         projectElements[i].classList.remove('selected-project');
       }
-      console.log(projectElements[i].classList);
     }
   }
 
-  const _updateProjectsDOM = function() {
+  const _initializeProjects = function() {
     // refreshes the projects container with all projects in the app
-    projectContainer.replaceChildren();
+    projectsContainer.replaceChildren();
     for (let project of projectList) {
       // create HTML element for each project and push onto array
       const element = document.createElement('div');
       element.innerHTML = project.projectName;
       element.classList.add('project');
-      projectContainer.append(element);
+      projectsContainer.append(element);
+      element.addEventListener('click', _projectClicked);
     }
     _updateSelectedProject();
   }
@@ -49,7 +62,13 @@ const domModifier = (function() {
     // brings up form for new project, adds it to the list, and updates the DOM
     // FIXME: replace with new project from form
     app.addProject(newProject);
-    _updateProjectsDOM();
+
+    // create HTML element for new project and append it to projectsContainer
+    const element = document.createElement('div');
+    element.innerHTML = newProject.projectName;
+    element.classList.add('project');
+    element.addEventListener('click', _projectClicked);
+    projectsContainer.append(element);
   }
 
   const removeProject = function(projectName) {
@@ -67,7 +86,7 @@ const domModifier = (function() {
   }
 
   // update project list in DOM to start
-  _updateProjectsDOM();
+  _initializeProjects();
 
   // update todos for selected project in DOM to start
   _updateTodosDOM();
