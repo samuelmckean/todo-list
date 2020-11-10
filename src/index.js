@@ -20,12 +20,7 @@ const domModifier = (function() {
 
   const _projectClicked = function() {
     // update currentSelectedProject with the clicked project
-    const clickedProjectName = this.innerHTML;
-    for (let i = 0; i < projectList.length; i++) {
-      if (clickedProjectName === projectList[i].projectName) {
-        currentSelectedProject = projectList[i];
-      }
-    }
+    currentSelectedProject = app.findProject(this.innerHTML);
     _updateSelectedProject();
   }
 
@@ -38,6 +33,11 @@ const domModifier = (function() {
         projectElements[i].classList.remove('selected-project');
       }
     }
+  }
+
+  const _projectHover = function() {
+    // displays trashcan icon for delete when hovering over a project
+    
   }
 
   const _initializeProjects = function() {
