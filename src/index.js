@@ -20,14 +20,14 @@ const domModifier = (function() {
 
   const _projectClicked = function() {
     // update currentSelectedProject with the clicked project
-    currentSelectedProject = app.findProject(this.innerHTML);
+    currentSelectedProject = app.findProject(this.innerText);
     _updateSelectedProject();
   }
 
   const _updateSelectedProject = function() {
     // updates which project is the current selected project in DOM
     for (let i = 0 ; i < projectElements.length; i++) {
-      if (projectElements[i].innerHTML === currentSelectedProject.projectName) {
+      if (projectElements[i].innerText === currentSelectedProject.projectName) {
         projectElements[i].classList.add('selected-project');
       } else {
         projectElements[i].classList.remove('selected-project');
@@ -46,6 +46,7 @@ const domModifier = (function() {
     const trashIcon = document.createElement('img');
     trashIcon.src = 'images/trash-icon.png';
     deleteButton.append(trashIcon);
+    deleteButton.addEventListener('click', removeProject);
     this.append(deleteButton);
   }
 
@@ -60,7 +61,7 @@ const domModifier = (function() {
     for (let project of projectList) {
       // create HTML element for each project and push onto array
       const element = document.createElement('div');
-      element.innerHTML = project.projectName;
+      element.innerText = project.projectName;
       element.classList.add('project');
       projectsContainer.append(element);
       element.addEventListener('click', _projectClicked);
@@ -77,12 +78,13 @@ const domModifier = (function() {
   const addProject = function() {
     // brings up form for new project, adds it to the list, and updates the DOM
     // FIXME: replace prompt with new project form
-    const newProject = Project(prompt('Enter new project name'))
+    const newProjectName = prompt('Enter new project name');
+    const newProject = Project(newProjectName, []);
     app.addProject(newProject);
 
     // create HTML element for new project and append it to projectsContainer
     const element = document.createElement('div');
-    element.innerHTML = newProject.projectName;
+    element.innerText = newProject.projectName;
     element.classList.add('project');
     element.addEventListener('click', _projectClicked);
     element.addEventListener('mouseenter', _projectHover);
@@ -90,10 +92,25 @@ const domModifier = (function() {
     projectsContainer.append(element);
   }
 
-  const removeProject = function(projectName) {
+  const removeProject = function(event) {
     // deletes the project from the projects list and updates DOM
+
+    // get project for clicked delete button and remove from app
+    const deletedProjectElement = this.parentElement;
+    const project = app.findProject(deletedProjectElement.innerText);
     app.removeProject(project);
-    _updateProjectsDOM();
+
+    // remove project from dom
+    deletedProjectElement.remove();
+
+    // if deleted project was selected than update currentSelectedProject
+    if (project === currentSelectedProject) {
+      currentSelectedProject = app.projects[0];
+      _updateSelectedProject();
+    }
+
+    // stop propagation of event to outer div element
+    event.stopPropagation();
   }
 
   const addTodo = function() {
