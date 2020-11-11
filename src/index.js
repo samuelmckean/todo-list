@@ -18,13 +18,13 @@ const domModifier = (function() {
   // get list of all project elements
   const projectElements = projectsContainer.getElementsByClassName('project');
 
-  const _projectClicked = function() {
+  const projectClicked = function() {
     // update currentSelectedProject with the clicked project
     currentSelectedProject = app.findProject(this.innerText);
-    _updateSelectedProject();
+    updateSelectedProject();
   }
 
-  const _updateSelectedProject = function() {
+  const updateSelectedProject = function() {
     // updates which project is the current selected project in DOM
     for (let i = 0 ; i < projectElements.length; i++) {
       if (projectElements[i].innerText === currentSelectedProject.projectName) {
@@ -33,9 +33,10 @@ const domModifier = (function() {
         projectElements[i].classList.remove('selected-project');
       }
     }
+    updateTodosDOM();
   }
 
-  const _projectHover = function() {
+  const projectHover = function() {
     // displays trashcan icon for delete when hovering over a project
     
     // create button
@@ -50,12 +51,12 @@ const domModifier = (function() {
     this.append(deleteButton);
   }
 
-  const _projectUnhover = function() {
+  const projectUnhover = function() {
     // removes delete button
     document.getElementById('delete-project').remove();
   }
 
-  const _initializeProjects = function() {
+  const initializeProjects = function() {
     // initializes the projects container with all projects in the app
     projectsContainer.replaceChildren();
     for (let project of projectList) {
@@ -64,15 +65,44 @@ const domModifier = (function() {
       element.innerText = project.projectName;
       element.classList.add('project');
       projectsContainer.append(element);
-      element.addEventListener('click', _projectClicked);
-      element.addEventListener('mouseenter', _projectHover);
-      element.addEventListener('mouseleave', _projectUnhover);
+      element.addEventListener('click', projectClicked);
+      element.addEventListener('mouseenter', projectHover);
+      element.addEventListener('mouseleave', projectUnhover);
     }
-    _updateSelectedProject();
+    updateSelectedProject();
   }
 
-  const _updateTodosDOM = function() {
+  const updateTodosDOM = function() {
     // refreshes the projects container with all the todos for the currently selected project
+    todosContainer.replaceChildren();
+    const todos = currentSelectedProject.getTodos();
+    for (let i = 0; i < todos.length; i++) {
+      const todo = todos[i];
+      todosContainer.append(createTodoElement(todo));
+    }
+  }
+
+  const createTodoElement = function(todo) {
+    // create div container for each todo
+    const div = document.createElement('div');
+    div.classList.add('todo');
+    const title = document.createElement('h2');
+    title.innerText = todo.title;
+    div.append(title);
+    
+    const description = document.createElement('p');
+    description.innerText = todo.description;
+    div.append(description);
+
+    const priority = document.createElement('p');
+    priority.innerText = 'Priority: ' + todo.priority;
+    div.append(priority);
+
+    const dueDate = document.createElement('p');
+    dueDate.innerText = todo.dueDate.getDate();
+    div.append(dueDate);
+
+    return div;
   }
 
   const addProject = function() {
@@ -86,9 +116,9 @@ const domModifier = (function() {
     const element = document.createElement('div');
     element.innerText = newProject.projectName;
     element.classList.add('project');
-    element.addEventListener('click', _projectClicked);
-    element.addEventListener('mouseenter', _projectHover);
-    element.addEventListener('mouseleave', _projectUnhover);
+    element.addEventListener('click', projectClicked);
+    element.addEventListener('mouseenter', projectHover);
+    element.addEventListener('mouseleave', projectUnhover);
     projectsContainer.append(element);
   }
 
@@ -106,7 +136,7 @@ const domModifier = (function() {
     // if deleted project was selected than update currentSelectedProject
     if (project === currentSelectedProject) {
       currentSelectedProject = app.projects[0];
-      _updateSelectedProject();
+      updateSelectedProject();
     }
 
     // stop propagation of event to outer div element
@@ -125,18 +155,11 @@ const domModifier = (function() {
   document.getElementById('add-project').addEventListener('click', addProject);
 
   // update project list in DOM to start
-  _initializeProjects();
+  initializeProjects();
 
   // update todos for selected project in DOM to start
-  _updateTodosDOM();
+  updateTodosDOM();
 
   // update selected project in DOM to start
-  _updateSelectedProject();
-
-  return {
-    addProject,
-    removeProject,
-    addTodo,
-    removeTodo
-  }
+  updateSelectedProject();
 })();
