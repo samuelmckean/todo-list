@@ -99,7 +99,7 @@ const domModifier = (function() {
     div.append(priority);
 
     const dueDate = document.createElement('p');
-    dueDate.innerText = todo.dueDate.getDate();
+    dueDate.innerText = todo.dueDate.toLocaleDateString();
     div.append(dueDate);
 
     return div;
