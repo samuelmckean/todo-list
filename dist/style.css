@@ -1,7 +1,13 @@
+html, body {
+  margin:0px;
+}
+
 #root {
+  padding: 1rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(6, 1fr);
+  height: 90vh;
 }
 
 #projects {
@@ -10,11 +16,14 @@
   border-style: solid;
   padding: 1rem;
   background-color: #eeeeee;
+  display: flex;
+  flex-direction: column;
 }
 
-#projects-list {
+#projects-container {
   grid-column: 1 / 2;
   grid-row: 2 / 6;
+  min-height: 70%;
 }
 
 .project {
@@ -34,6 +43,7 @@
 #add-project {
   grid-row: 6 / 7;
   margin: 1rem;
+  justify-self: flex-end;
 }
 
 #todos {
@@ -42,11 +52,16 @@
   padding: 1rem;
 }
 
+#todos-container {
+  min-height: 80vh;
+}
+
 .todo {
   border-style: solid;
   border-radius: 0.5rem;
   padding: 0.5rem;
   background-color: #eeeeee;
+  margin-bottom: 1rem;
 }
 
 #add-todo {
