@@ -43,6 +43,7 @@ html, body {
 #add-project {
   grid-row: 6 / 7;
   margin: 1rem;
+  justify-self: flex-end;
 }
 
 #todos {
