@@ -79,6 +79,15 @@ html, body {
   outline: none;
 }
 
+.add-button:active {
+  background-color: rgb(4, 89, 99);
+  color: white;
+  border-color: black;
+  padding: 1rem;
+  border-radius: 1rem;
+  outline: none;
+}
+
 #delete-project {
   max-width: 2rem;
   max-height: 2rem;
