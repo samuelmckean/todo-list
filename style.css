@@ -76,6 +76,7 @@ html, body {
   border-color: black;
   padding: 1rem;
   border-radius: 1rem;
+  outline: none;
 }
 
 #delete-project {
