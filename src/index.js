@@ -105,6 +105,17 @@ const domModifier = (function() {
     return div;
   }
 
+  const newTodoSubmit = function() {
+    // make a Todo object from entry fields, append to todos, and call updateTodosDOM
+    const title = document.querySelector('#new-title input').value;
+    const description = document.querySelector('#new-description input').value;
+    const priority = document.querySelector('#new-priority input').value;
+    const dueDate = Date(document.querySelector('#new-due-date input').value);
+    const todo = Todo(title, description, dueDate, priority);
+    app.addTodo(todo, currentSelectedProject);
+    updateTodosDOM();
+  }
+
   const addProject = function() {
     // brings up form for new project, adds it to the list, and updates the DOM
     // FIXME: replace prompt with new project form
@@ -148,19 +159,21 @@ const domModifier = (function() {
     
     // create new todo element with text fields for all the values
     const div = document.createElement('div');
+    div.id = 'new-todo-form';
     div.classList.add('todo');
     
     const titleDiv = document.createElement('div');
+    titleDiv.id = 'new-title';
     const titleLabel = document.createElement('label');
     titleLabel.innerText = 'Todo Title:';
     titleLabel.for = 'title';
     const titleInput = document.createElement('input');
     titleInput.name = 'title';
-    titleInput.required = true;
     titleDiv.append(titleLabel, titleInput);
     div.append(titleDiv);
 
     const descriptionDiv = document.createElement('div');
+    descriptionDiv.id = 'new-description';
     const descriptionLabel = document.createElement('label');
     descriptionLabel.innerText = 'Todo Description:';
     descriptionLabel.for = 'description';
@@ -170,6 +183,7 @@ const domModifier = (function() {
     div.append(descriptionDiv);
 
     const dueDateDiv = document.createElement('div');
+    dueDateDiv.id = 'new-due-date';
     const dueDateLabel = document.createElement('label');
     dueDateLabel.innerText = 'Due Date:';
     dueDateLabel.for = 'due-date';
@@ -180,6 +194,7 @@ const domModifier = (function() {
     div.append(dueDateDiv);
 
     const priorityDiv = document.createElement('div');
+    priorityDiv.id = 'new-priority';
     const priorityLabel = document.createElement('label');
     priorityLabel.innerText = 'Priority:';
     priorityLabel.for = 'priority';
@@ -196,6 +211,7 @@ const domModifier = (function() {
     submitInput.type = 'submit';
     submitInput.value = 'Done';
     submitInput.classList.add('add-button');
+    submitInput.addEventListener('click', newTodoSubmit);
     submitDiv.append(submitInput);
     div.append(submitDiv);
 
