@@ -1,14 +1,24 @@
 import { Todo } from './todo';
 import { Project } from './project';
+import { storage } from './localStorage';
 
 // app module
 const app = (function () {
   // initialize Array of projects with the default project
-  const todo1 = Todo();
-  const todo2 = Todo('1st Todo', 'Do me', '2020-10-30', '5', "I'm important", ['subtask 1']);
-  const test = [todo1, todo2];
-  const defaultProject = Project('myProject', test);
-  const projects = [defaultProject];
+  let projects;
+  if (storage === null) {
+    // if storage not available, initialize projects with empty array
+    const firstProject = Project('First Project', []);
+    projects = [firstProject];
+  } else {
+    // if storage available, initialize from storage
+    projects = storage.getStorage();
+    if (projects === null) {
+      // if there are not projects in storage, create a first project
+      const firstProject = Project('First Project', []);
+      projects = [firstProject]; 
+    }
+  }
 
   const findProject = function(projectName) {
     // finds and returns the first project object matching the projectName
@@ -24,6 +34,7 @@ const app = (function () {
   const addProject = function(newProject) {
     // adds a project it to the list of projects
     projects.push(newProject);
+    storage.updateStorage(projects);
   }
 
   const removeProject = function(project) {
@@ -33,16 +44,19 @@ const app = (function () {
         projects.splice(index, 1);
       }
     });
+    storage.updateStorage(projects);
   }
 
   const addTodo = function(todo, project) {
     // adds a new todo to the project
     project.addTodo(todo);
+    storage.updateStorage(projects);
   }
 
   const removeTodo = function(todo, project) {
     // deletes the todo from that projects
     project.removeTodo(todo);
+    storage.updateStorage(projects);
   }
 
   return {
