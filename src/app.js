@@ -34,6 +34,7 @@ const app = (function () {
   const addProject = function(newProject) {
     // adds a project it to the list of projects
     projects.push(newProject);
+    storage.updateStorage(projects);
   }
 
   const removeProject = function(project) {
@@ -43,16 +44,19 @@ const app = (function () {
         projects.splice(index, 1);
       }
     });
+    storage.updateStorage(projects);
   }
 
   const addTodo = function(todo, project) {
     // adds a new todo to the project
     project.addTodo(todo);
+    storage.updateStorage(projects);
   }
 
   const removeTodo = function(todo, project) {
     // deletes the todo from that projects
     project.removeTodo(todo);
+    storage.updateStorage(projects);
   }
 
   return {

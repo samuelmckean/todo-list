@@ -40,7 +40,7 @@ const storage = (function() {
       const storageData = JSON.parse(localStorage.getItem('projects'));
       const projects = [];
       for (let i = 0; i < storageData.length; i++) {
-        const project = Project(project.projectName, []);
+        const project = Project(storageData[i].projectName, []);
         for (let j = 0; j < storageData[i].todos.length; j++) {
           const storageTodo = storageData[i].todos[j];
           const todo = Todo(storageTodo.title, storageTodo.description, storageTodo.dueDate, storageTodo.priority);
@@ -54,8 +54,15 @@ const storage = (function() {
     }
   }
 
-  const updateStorage = function() {
-    
+  const updateStorage = function(projects) {
+    // converts all projects to JSON and updates localStorage with the data
+    const data = [];
+    for (let i = 0; i < projects.length; i++) {
+      const project = projects[i];
+      project.todos = project.getTodos();
+      data.push(project);
+    }
+    localStorage.setItem('projects', JSON.stringify(data));
   }
 
   if (storageAvailable('localStorage')) {
