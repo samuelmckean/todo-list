@@ -24,13 +24,25 @@ const Project = function(projectName, todos) {
     });
   }
 
+  const findTodo = function(todoTitle) {
+    // returns a Todo object if the project has one with a matching title
+    // otherwise returns null
+    for (let i = 0; i < _todos.length; i++) {
+      if (_todos[i].title === todoTitle) {
+        return _todos[i];
+      }
+    }
+    return null;
+  }
+
   const getTodos = function() { return _todos };
 
   return {
     projectName,
     addTodo,
     removeTodo,
-    getTodos
+    getTodos,
+    findTodo
   }
 };
 
