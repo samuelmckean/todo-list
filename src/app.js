@@ -1,14 +1,24 @@
 import { Todo } from './todo';
 import { Project } from './project';
+import { storage } from './localStorage';
 
 // app module
 const app = (function () {
   // initialize Array of projects with the default project
-  const todo1 = Todo();
-  const todo2 = Todo('1st Todo', 'Do me', '2020-10-30', '5', "I'm important", ['subtask 1']);
-  const test = [todo1, todo2];
-  const defaultProject = Project('myProject', test);
-  const projects = [defaultProject];
+  let projects;
+  if (storage === null) {
+    // if storage not available, initialize projects with empty array
+    const firstProject = Project('First Project', []);
+    projects = [firstProject];
+  } else {
+    // if storage available, initialize from storage
+    projects = storage.getStorage();
+    if (projects === null) {
+      // if there are not projects in storage, create a first project
+      const firstProject = Project('First Project', []);
+      projects = [firstProject]; 
+    }
+  }
 
   const findProject = function(projectName) {
     // finds and returns the first project object matching the projectName
