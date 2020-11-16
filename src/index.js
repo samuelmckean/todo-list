@@ -246,6 +246,10 @@ const domModifier = (function() {
 
   const removeTodo = function() {
     // deletes the todo from that projects todos list and updates DOM
+    const todoTitle = this.parentElement.querySelector('h2').innerText;
+    const todo = currentSelectedProject.findTodo(todoTitle);
+    app.removeTodo(todo, currentSelectedProject);
+    updateTodosDOM();
   }
 
   // wire up event listener for Add Project and Add Todo buttons
