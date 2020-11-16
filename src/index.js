@@ -56,6 +56,27 @@ const domModifier = (function() {
     document.getElementById('delete-project').remove();
   }
 
+  // FIXME: edit to hover/unhover for todos
+  const todoHover = function() {
+    // displays trashcan icon for delete when hovering over a project
+    
+    // create button
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-todo';
+
+    // create img element
+    const trashIcon = document.createElement('img');
+    trashIcon.src = 'images/trash-icon.png';
+    deleteButton.append(trashIcon);
+    deleteButton.addEventListener('click', removeTodo);
+    this.prepend(deleteButton);
+  }
+
+  const todoUnhover = function() {
+    // removes delete button
+    document.getElementById('delete-todo').remove();
+  }
+
   const initializeProjects = function() {
     // initializes the projects container with all projects in the app
     projectsContainer.replaceChildren();
@@ -78,7 +99,10 @@ const domModifier = (function() {
     const todos = currentSelectedProject.getTodos();
     for (let i = 0; i < todos.length; i++) {
       const todo = todos[i];
-      todosContainer.append(createTodoElement(todo));
+      const element = createTodoElement(todo);
+      element.addEventListener('mouseenter', todoHover);
+      element.addEventListener('mouseleave', todoUnhover);
+      todosContainer.append(element);
     }
   }
 

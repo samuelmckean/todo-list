@@ -100,3 +100,16 @@ html, body {
   width: 100%;
   height: 100%;
 }
+
+#delete-todo {
+  max-width: 3rem;
+  max-height: 3rem;
+  float: right;
+  background-color: transparent;
+  border-color: transparent;
+}
+
+#delete-todo img {
+  width: 100%;
+  height: 100%;
+}
