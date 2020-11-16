@@ -136,8 +136,14 @@ const domModifier = (function() {
     const priority = document.querySelector('#new-priority input').value;
     const dueDate = Date(document.querySelector('#new-due-date input').value);
     const todo = Todo(title, description, dueDate, priority);
-    app.addTodo(todo, currentSelectedProject);
-    updateTodosDOM();
+    if (title === '' ) {
+      alert('Todo title is required.');
+    } else if (priority < 1 || priority > 5) {
+      alert('Priority must be 1-5.')
+    } else {
+      app.addTodo(todo, currentSelectedProject);
+      updateTodosDOM();  
+    }
   }
 
   const addProject = function() {
