@@ -56,7 +56,6 @@ const domModifier = (function() {
     document.getElementById('delete-project').remove();
   }
 
-  // FIXME: edit to hover/unhover for todos
   const todoHover = function() {
     // displays trashcan icon for delete when hovering over a project
     
@@ -246,16 +245,23 @@ const domModifier = (function() {
       submitDiv.append(submitInput);
       div.append(submitDiv);
 
+      div.addEventListener('mouseenter', todoHover);
+      div.addEventListener('mouseleave', todoUnhover);
       todosContainer.append(div);
     }
   }
 
   const removeTodo = function() {
     // deletes the todo from that projects todos list and updates DOM
-    const todoTitle = this.parentElement.querySelector('h2').innerText;
-    const todo = currentSelectedProject.findTodo(todoTitle);
-    app.removeTodo(todo, currentSelectedProject);
-    updateTodosDOM();
+    const todoTitleElement = this.parentElement.querySelector('h2');
+    if (todoTitleElement === null) {
+      updateTodosDOM();
+    } else {
+      const todoTitle = this.parentElement.querySelector('h2').innerText;
+      const todo = currentSelectedProject.findTodo(todoTitle);
+      app.removeTodo(todo, currentSelectedProject);
+      updateTodosDOM();
+    }
   }
 
   // wire up event listener for Add Project and Add Todo buttons
