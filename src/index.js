@@ -48,7 +48,7 @@ const domModifier = (function() {
     trashIcon.src = 'images/trash-icon.png';
     deleteButton.append(trashIcon);
     deleteButton.addEventListener('click', removeProject);
-    this.append(deleteButton);
+    this.prepend(deleteButton);
   }
 
   const projectUnhover = function() {
@@ -76,6 +76,15 @@ const domModifier = (function() {
     document.getElementById('delete-todo').remove();
   }
 
+  const todoClicked = function() {
+    // expands or collapses todo on click by toggling expanded property and
+    // rendering todo DOM again
+    const todoTitle = this.querySelector('h2').innerText;
+    const todo = currentSelectedProject.findTodo(todoTitle);
+    app.toggleExpanded(todo);
+    updateTodosDOM();
+  }
+
   const initializeProjects = function() {
     // initializes the projects container with all projects in the app
     projectsContainer.replaceChildren();
@@ -101,6 +110,7 @@ const domModifier = (function() {
       const element = createTodoElement(todo);
       element.addEventListener('mouseenter', todoHover);
       element.addEventListener('mouseleave', todoUnhover);
+      element.addEventListener('click', todoClicked);
       todosContainer.append(element);
     }
   }
@@ -113,17 +123,20 @@ const domModifier = (function() {
     title.innerText = todo.title;
     div.append(title);
     
-    const description = document.createElement('p');
-    description.innerText = todo.description;
-    div.append(description);
-
-    const priority = document.createElement('p');
-    priority.innerText = 'Priority: ' + todo.priority;
-    div.append(priority);
-
-    const dueDate = document.createElement('p');
-    dueDate.innerText = todo.dueDate.toLocaleDateString();
-    div.append(dueDate);
+    if (todo.expanded === true) {
+      // if todo is expanded create other fields
+      const description = document.createElement('p');
+      description.innerText = todo.description;
+      div.append(description);
+  
+      const priority = document.createElement('p');
+      priority.innerText = 'Priority: ' + todo.priority;
+      div.append(priority);
+  
+      const dueDate = document.createElement('p');
+      dueDate.innerText = todo.dueDate.toLocaleDateString();
+      div.append(dueDate);  
+    }
 
     return div;
   }

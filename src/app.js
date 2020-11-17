@@ -59,12 +59,22 @@ const app = (function () {
     storage.updateStorage(projects);
   }
 
+  const toggleExpanded = function(todo) {
+    // toggles the todo between expanded and collapsed
+    if (todo.expanded === false) {
+      todo.expanded = true;
+    } else {
+      todo.expanded = false;
+    }
+  }
+
   return {
     findProject,
     addProject,
     removeProject,
     addTodo,
     removeTodo,
+    toggleExpanded,
     projects
   }
 })();
