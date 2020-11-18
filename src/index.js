@@ -207,71 +207,75 @@ const domModifier = (function() {
     event.stopPropagation();
   }
 
+  const createTodoForm = function() {
+    // create new todo element with text fields for all the values
+    const div = document.createElement('div');
+    div.id = 'new-todo-form';
+    div.classList.add('todo');
+    
+    const titleDiv = document.createElement('div');
+    titleDiv.id = 'new-title';
+    const titleLabel = document.createElement('label');
+    titleLabel.innerText = 'Todo Title:';
+    titleLabel.for = 'title';
+    const titleInput = document.createElement('input');
+    titleInput.name = 'title';
+    titleDiv.append(titleLabel, titleInput);
+    div.append(titleDiv);
+
+    const descriptionDiv = document.createElement('div');
+    descriptionDiv.id = 'new-description';
+    const descriptionLabel = document.createElement('label');
+    descriptionLabel.innerText = 'Todo Description:';
+    descriptionLabel.for = 'description';
+    const descriptionInput = document.createElement('input');
+    descriptionInput.name = 'description';
+    descriptionDiv.append(descriptionLabel, descriptionInput);
+    div.append(descriptionDiv);
+
+    const dueDateDiv = document.createElement('div');
+    dueDateDiv.id = 'new-due-date';
+    const dueDateLabel = document.createElement('label');
+    dueDateLabel.innerText = 'Due Date:';
+    dueDateLabel.for = 'due-date';
+    const dueDateInput = document.createElement('input');
+    dueDateInput.name = 'due-date';
+    dueDateInput.type = 'date';
+    dueDateDiv.append(dueDateLabel, dueDateInput);
+    div.append(dueDateDiv);
+
+    const priorityDiv = document.createElement('div');
+    priorityDiv.id = 'new-priority';
+    const priorityLabel = document.createElement('label');
+    priorityLabel.innerText = 'Priority:';
+    priorityLabel.for = 'priority';
+    const priorityInput = document.createElement('input');
+    priorityInput.name = 'priority';
+    priorityInput.type = 'number';
+    priorityInput.min = '1';
+    priorityInput.max = '5';
+    priorityDiv.append(priorityLabel, priorityInput);
+    div.append(priorityDiv);
+
+    const submitDiv = document.createElement('div');
+    const submitInput = document.createElement('input');
+    submitInput.type = 'submit';
+    submitInput.value = 'Done';
+    submitInput.classList.add('add-button');
+    submitInput.addEventListener('click', newTodoSubmit);
+    submitDiv.append(submitInput);
+    div.append(submitDiv);
+
+    div.addEventListener('mouseenter', todoHover);
+    div.addEventListener('mouseleave', todoUnhover);
+
+    return div;
+  }
+
   const addTodo = function() {
     // brings up form for new todo, adds it to the list, and updates the DOM
     if (document.getElementById('new-todo-form') === null) {
-    
-      // create new todo element with text fields for all the values
-      const div = document.createElement('div');
-      div.id = 'new-todo-form';
-      div.classList.add('todo');
-      
-      const titleDiv = document.createElement('div');
-      titleDiv.id = 'new-title';
-      const titleLabel = document.createElement('label');
-      titleLabel.innerText = 'Todo Title:';
-      titleLabel.for = 'title';
-      const titleInput = document.createElement('input');
-      titleInput.name = 'title';
-      titleDiv.append(titleLabel, titleInput);
-      div.append(titleDiv);
-
-      const descriptionDiv = document.createElement('div');
-      descriptionDiv.id = 'new-description';
-      const descriptionLabel = document.createElement('label');
-      descriptionLabel.innerText = 'Todo Description:';
-      descriptionLabel.for = 'description';
-      const descriptionInput = document.createElement('input');
-      descriptionInput.name = 'description';
-      descriptionDiv.append(descriptionLabel, descriptionInput);
-      div.append(descriptionDiv);
-
-      const dueDateDiv = document.createElement('div');
-      dueDateDiv.id = 'new-due-date';
-      const dueDateLabel = document.createElement('label');
-      dueDateLabel.innerText = 'Due Date:';
-      dueDateLabel.for = 'due-date';
-      const dueDateInput = document.createElement('input');
-      dueDateInput.name = 'due-date';
-      dueDateInput.type = 'date';
-      dueDateDiv.append(dueDateLabel, dueDateInput);
-      div.append(dueDateDiv);
-
-      const priorityDiv = document.createElement('div');
-      priorityDiv.id = 'new-priority';
-      const priorityLabel = document.createElement('label');
-      priorityLabel.innerText = 'Priority:';
-      priorityLabel.for = 'priority';
-      const priorityInput = document.createElement('input');
-      priorityInput.name = 'priority';
-      priorityInput.type = 'number';
-      priorityInput.min = '1';
-      priorityInput.max = '5';
-      priorityDiv.append(priorityLabel, priorityInput);
-      div.append(priorityDiv);
-
-      const submitDiv = document.createElement('div');
-      const submitInput = document.createElement('input');
-      submitInput.type = 'submit';
-      submitInput.value = 'Done';
-      submitInput.classList.add('add-button');
-      submitInput.addEventListener('click', newTodoSubmit);
-      submitDiv.append(submitInput);
-      div.append(submitDiv);
-
-      div.addEventListener('mouseenter', todoHover);
-      div.addEventListener('mouseleave', todoUnhover);
-      todosContainer.append(div);
+      todosContainer.append(createTodoForm());
     }
   }
 
