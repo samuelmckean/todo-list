@@ -68,11 +68,23 @@ const domModifier = (function() {
     deleteButton.append(trashIcon);
     deleteButton.addEventListener('click', removeTodo);
     this.prepend(deleteButton);
+
+    // create edit button
+    const editButton = document.createElement('button');
+    editButton.id = 'edit-todo';
+    const pencilIcon = document.createElement('img');
+    pencilIcon.src = 'images/pencil-icon.png';
+    editButton.append(pencilIcon);
+    editButton.addEventListener('click', editTodo);
+    this.prepend(editButton);
   }
 
   const todoUnhover = function() {
     // removes delete button
     document.getElementById('delete-todo').remove();
+
+    // removes edit button
+    document.getElementById('edit-todo').remove();
   }
 
   const todoClicked = function() {
@@ -275,6 +287,11 @@ const domModifier = (function() {
       app.removeTodo(todo, currentSelectedProject);
       updateTodosDOM();
     }
+  }
+
+  const editTodo = function() {
+    // allows the user to edit the details of a todo
+    console.log('edit todo clicked');
   }
 
   // wire up event listener for Add Project and Add Todo buttons
