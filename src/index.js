@@ -13,7 +13,6 @@ const domModifier = (function() {
   // initialize project and todos list from app
   let projectList = app.projects;
   let currentSelectedProject = projectList[0];  // start with first project as selected
-  let todoList = currentSelectedProject.getTodos();
 
   // get list of all project elements
   const projectElements = projectsContainer.getElementsByClassName('project');
