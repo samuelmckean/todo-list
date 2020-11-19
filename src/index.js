@@ -56,19 +56,6 @@ const domModifier = (function() {
   }
 
   const todoHover = function() {
-    // displays trashcan icon for delete when hovering over a project
-    
-    // create button
-    // const deleteButton = document.createElement('button');
-    // deleteButton.id = 'delete-todo';
-
-    // // create img element
-    // const trashIcon = document.createElement('img');
-    // trashIcon.src = 'images/trash-icon.png';
-    // deleteButton.append(trashIcon);
-    // deleteButton.addEventListener('click', removeTodo);
-    // this.prepend(deleteButton);
-
     // create edit button
     const editButton = document.createElement('button');
     editButton.id = 'edit-todo';
@@ -301,6 +288,20 @@ const domModifier = (function() {
     // creates a form for a new todo prefilled with the existing todos values
     div.replaceChildren();
 
+    const clone = div.cloneNode(true);
+
+    // displays trashcan icon for delete when in editing mode for todo
+    // create button
+    const deleteButton = document.createElement('button');
+    deleteButton.id = 'delete-todo';
+
+    // create img element
+    const trashIcon = document.createElement('img');
+    trashIcon.src = 'images/trash-icon.png';
+    deleteButton.append(trashIcon);
+    deleteButton.addEventListener('click', removeTodo);
+    clone.prepend(deleteButton);
+
     const titleDiv = document.createElement('div');
     titleDiv.id = 'new-title';
     const titleLabel = document.createElement('label');
@@ -310,7 +311,7 @@ const domModifier = (function() {
     titleInput.name = 'title';
     titleInput.value = todo.title;
     titleDiv.append(titleLabel, titleInput);
-    div.append(titleDiv);
+    clone.append(titleDiv);
 
     const descriptionDiv = document.createElement('div');
     descriptionDiv.id = 'new-description';
@@ -321,7 +322,7 @@ const domModifier = (function() {
     descriptionInput.name = 'description';
     descriptionInput.value = todo.description;
     descriptionDiv.append(descriptionLabel, descriptionInput);
-    div.append(descriptionDiv);
+    clone.append(descriptionDiv);
 
     const dueDateDiv = document.createElement('div');
     dueDateDiv.id = 'new-due-date';
@@ -333,7 +334,7 @@ const domModifier = (function() {
     dueDateInput.type = 'date';
     dueDateInput.value = todo.dueDate;
     dueDateDiv.append(dueDateLabel, dueDateInput);
-    div.append(dueDateDiv);
+    clone.append(dueDateDiv);
 
     const priorityDiv = document.createElement('div');
     priorityDiv.id = 'new-priority';
@@ -347,7 +348,7 @@ const domModifier = (function() {
     priorityInput.max = '5';
     priorityInput.value = todo.priority;
     priorityDiv.append(priorityLabel, priorityInput);
-    div.append(priorityDiv);
+    clone.append(priorityDiv);
 
     const submitDiv = document.createElement('div');
     const submitInput = document.createElement('input');
@@ -356,11 +357,9 @@ const domModifier = (function() {
     submitInput.classList.add('add-button');
     submitInput.addEventListener('click', editTodoSubmit);
     submitDiv.append(submitInput);
-    div.append(submitDiv);
+    clone.append(submitDiv);
 
-    div.addEventListener('mouseenter', todoHover);
-    div.addEventListener('mouseleave', todoUnhover);
-
+    div.parentElement.replaceChild(clone, div);
   }
 
   const addTodo = function() {
