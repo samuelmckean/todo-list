@@ -59,6 +59,15 @@ const app = (function () {
     storage.updateStorage(projects);
   }
 
+  const editTodo = function(todo, newTitle, newDescription, newDueDate, newPriority) {
+    // edits all the fields for the todo and updates storage
+    todo.title = newTitle;
+    todo.description = newDescription;
+    todo.dueDate = newDueDate;
+    todo.priority = newPriority;
+    storage.updateStorage(projects);
+  }
+
   const toggleExpanded = function(todo) {
     // toggles the todo between expanded and collapsed
     if (todo.expanded === false) {

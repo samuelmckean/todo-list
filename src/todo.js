@@ -2,7 +2,7 @@
 const Todo = function(title, description, dueDate, priority, notes, checklist, expanded) {
   title = title || '',
   description = description || '',
-  dueDate = new Date(dueDate) || null,
+  dueDate = dueDate || null,
   priority = priority || '1',
   notes = notes || '',
   checklist = checklist || [],
