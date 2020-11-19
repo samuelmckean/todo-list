@@ -59,15 +59,15 @@ const domModifier = (function() {
     // displays trashcan icon for delete when hovering over a project
     
     // create button
-    const deleteButton = document.createElement('button');
-    deleteButton.id = 'delete-todo';
+    // const deleteButton = document.createElement('button');
+    // deleteButton.id = 'delete-todo';
 
-    // create img element
-    const trashIcon = document.createElement('img');
-    trashIcon.src = 'images/trash-icon.png';
-    deleteButton.append(trashIcon);
-    deleteButton.addEventListener('click', removeTodo);
-    this.prepend(deleteButton);
+    // // create img element
+    // const trashIcon = document.createElement('img');
+    // trashIcon.src = 'images/trash-icon.png';
+    // deleteButton.append(trashIcon);
+    // deleteButton.addEventListener('click', removeTodo);
+    // this.prepend(deleteButton);
 
     // create edit button
     const editButton = document.createElement('button');
@@ -81,7 +81,7 @@ const domModifier = (function() {
 
   const todoUnhover = function() {
     // removes delete button
-    document.getElementById('delete-todo').remove();
+    // document.getElementById('delete-todo').remove();
 
     // removes edit button
     document.getElementById('edit-todo').remove();
@@ -169,6 +169,27 @@ const domModifier = (function() {
       alert('Priority must be 1-5.')
     } else {
       app.addTodo(todo, currentSelectedProject);
+      updateTodosDOM();  
+    }
+  }
+
+  const editTodoSubmit = function(todo) {
+    // make a Todo object from entry fields, append to todos, and call updateTodosDOM
+    const title = document.querySelector('#new-title input').value;
+    const description = document.querySelector('#new-description input').value;
+    const priority = document.querySelector('#new-priority input').value;
+    const dueDate = document.querySelector('#new-due-date input').value;
+
+    if (title === '' ) {
+      alert('Todo title is required.');
+    } else if (priority < 1 || priority > 5) {
+      alert('Priority must be 1-5.')
+    } else {  
+      // update todo properties with new values and refresh todos DOM
+      todo.title = title;
+      todo.description = description;
+      todo.priority = priority;
+      todo.dueDate = dueDate;
       updateTodosDOM();  
     }
   }
@@ -310,7 +331,6 @@ const domModifier = (function() {
     const dueDateInput = document.createElement('input');
     dueDateInput.name = 'due-date';
     dueDateInput.type = 'date';
-    console.log(todo.dueDate);
     dueDateInput.value = todo.dueDate;
     dueDateDiv.append(dueDateLabel, dueDateInput);
     div.append(dueDateDiv);
@@ -334,7 +354,7 @@ const domModifier = (function() {
     submitInput.type = 'submit';
     submitInput.value = 'Done';
     submitInput.classList.add('add-button');
-    submitInput.addEventListener('click', newTodoSubmit);
+    submitInput.addEventListener('click', editTodoSubmit);
     submitDiv.append(submitInput);
     div.append(submitDiv);
 
