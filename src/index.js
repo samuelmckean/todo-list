@@ -173,10 +173,7 @@ const domModifier = (function() {
       alert('Priority must be 1-5.')
     } else {  
       // update todo properties with new values and refresh todos DOM
-      todo.title = title;
-      todo.description = description;
-      todo.priority = priority;
-      todo.dueDate = dueDate;
+      app.editTodo(todo, title, description, dueDate, priority);
       updateTodosDOM();  
     }
   }
@@ -355,7 +352,9 @@ const domModifier = (function() {
     submitInput.type = 'submit';
     submitInput.value = 'Done';
     submitInput.classList.add('add-button');
-    submitInput.addEventListener('click', editTodoSubmit);
+    submitInput.addEventListener('click', () => {
+      editTodoSubmit(todo);
+    });
     submitDiv.append(submitInput);
     clone.append(submitDiv);
 
