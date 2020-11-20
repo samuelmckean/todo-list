@@ -61,10 +61,7 @@ const app = (function () {
 
   const editTodo = function(todo, newTitle, newDescription, newDueDate, newPriority) {
     // edits all the fields for the todo and updates storage
-    todo.title = newTitle;
-    todo.description = newDescription;
-    todo.dueDate = newDueDate;
-    todo.priority = newPriority;
+    todo.edit(newTitle, newDescription, newDueDate, newPriority);
     storage.updateStorage(projects);
   }
 
@@ -83,6 +80,7 @@ const app = (function () {
     removeProject,
     addTodo,
     removeTodo,
+    editTodo,
     toggleExpanded,
     projects
   }
