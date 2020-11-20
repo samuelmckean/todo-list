@@ -10,10 +10,11 @@ const Todo = function(title, description, dueDate, priority, notes, checklist, e
 
   const edit = function (newTitle, newDescription, newDueDate, newPriority) {
     // edits the properties of a todo object
-    title = newTitle || title,
-    description = newDescription || description,
-    dueDate = newDueDate || dueDate,
-    priority = newPriority || priority
+    this.title = newTitle || title,
+    this.description = newDescription || description,
+    this.dueDate = newDueDate || dueDate,
+    this.priority = newPriority || priority
+    return this;
   };
 
   return {
