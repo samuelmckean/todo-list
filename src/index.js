@@ -162,10 +162,10 @@ const domModifier = (function() {
 
   const editTodoSubmit = function(todo) {
     // make a Todo object from entry fields, append to todos, and call updateTodosDOM
-    const title = document.querySelector('#new-title input').value;
-    const description = document.querySelector('#new-description input').value;
-    const priority = document.querySelector('#new-priority input').value;
-    const dueDate = document.querySelector('#new-due-date input').value;
+    const title = document.querySelector('#edit-title input').value;
+    const description = document.querySelector('#edit-description input').value;
+    const priority = document.querySelector('#edit-priority input').value;
+    const dueDate = document.querySelector('#edit-due-date input').value;
 
     if (title === '' ) {
       alert('Todo title is required.');
@@ -300,7 +300,7 @@ const domModifier = (function() {
     clone.prepend(deleteButton);
 
     const titleDiv = document.createElement('div');
-    titleDiv.id = 'new-title';
+    titleDiv.id = 'edit-title';
     const titleLabel = document.createElement('label');
     titleLabel.innerText = 'Todo Title:';
     titleLabel.for = 'title';
@@ -311,7 +311,7 @@ const domModifier = (function() {
     clone.append(titleDiv);
 
     const descriptionDiv = document.createElement('div');
-    descriptionDiv.id = 'new-description';
+    descriptionDiv.id = 'edit-description';
     const descriptionLabel = document.createElement('label');
     descriptionLabel.innerText = 'Todo Description:';
     descriptionLabel.for = 'description';
@@ -322,7 +322,7 @@ const domModifier = (function() {
     clone.append(descriptionDiv);
 
     const dueDateDiv = document.createElement('div');
-    dueDateDiv.id = 'new-due-date';
+    dueDateDiv.id = 'edit-due-date';
     const dueDateLabel = document.createElement('label');
     dueDateLabel.innerText = 'Due Date:';
     dueDateLabel.for = 'due-date';
@@ -334,7 +334,7 @@ const domModifier = (function() {
     clone.append(dueDateDiv);
 
     const priorityDiv = document.createElement('div');
-    priorityDiv.id = 'new-priority';
+    priorityDiv.id = 'edit-priority';
     const priorityLabel = document.createElement('label');
     priorityLabel.innerText = 'Priority:';
     priorityLabel.for = 'priority';
@@ -385,10 +385,6 @@ const domModifier = (function() {
   const editTodo = function(event) {
     // allows the user to edit the details of a todo
 
-    if (document.getElementById('new-todo-form') !== null) {
-      // should remove add-new form if already exists
-      updateTodosDOM();
-    }
     const todoElement = this.parentElement;
     const todoTitle = todoElement.querySelector('h2').innerText;
     const todo = currentSelectedProject.findTodo(todoTitle);
