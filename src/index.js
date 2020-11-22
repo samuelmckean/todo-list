@@ -370,16 +370,10 @@ const domModifier = (function() {
 
   const removeTodo = function() {
     // deletes the todo from that projects todos list and updates DOM
-    const todoTitleElement = this.parentElement.querySelector('h2');
-    if (todoTitleElement === null) {
-      // only update todos DOM if the div being deleted is the new-todo form
-      updateTodosDOM();
-    } else {
-      const todoTitle = this.parentElement.querySelector('h2').innerText;
-      const todo = currentSelectedProject.findTodo(todoTitle);
-      app.removeTodo(todo, currentSelectedProject);
-      updateTodosDOM();
-    }
+    const todoTitle = document.querySelector('#edit-title input').value;
+    const todo = currentSelectedProject.findTodo(todoTitle);
+    app.removeTodo(todo, currentSelectedProject);
+    updateTodosDOM();
   }
 
   const editTodo = function(event) {
