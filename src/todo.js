@@ -2,7 +2,7 @@
 const Todo = function(title, description, dueDate, priority, notes, checklist, expanded) {
   title = title || '',
   description = description || '',
-  dueDate = dueDate || null,
+  dueDate = new Date(Date.parse(dueDate + 'T00:00:00')) || null,
   priority = priority || '1',
   notes = notes || '',
   checklist = checklist || [],
@@ -12,7 +12,7 @@ const Todo = function(title, description, dueDate, priority, notes, checklist, e
     // edits the properties of a todo object
     this.title = newTitle,
     this.description = newDescription,
-    this.dueDate = newDueDate,
+    this.dueDate = new Date(Date.parse(newDueDate + 'T00:00:00')),
     this.priority = newPriority;
     return this;
   };
