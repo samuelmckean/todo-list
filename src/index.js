@@ -1,6 +1,7 @@
 import { Todo } from "./todo";
 import { Project } from "./project";
 import { app } from "./app";
+import { format } from "date-fns";
 
 // DOM module
 const domModifier = (function() {
@@ -135,7 +136,8 @@ const domModifier = (function() {
       div.append(priority);
   
       const dueDate = document.createElement('p');
-      dueDate.innerText = new Date(todo.dueDate).toLocaleDateString();
+      // parses the date in the local timezone 
+      dueDate.innerText = format(todo.dueDate, 'MM/dd/yyyy');
       dueDate.classList.add('due-date');
       div.append(dueDate);  
     }
@@ -329,7 +331,7 @@ const domModifier = (function() {
     const dueDateInput = document.createElement('input');
     dueDateInput.name = 'due-date';
     dueDateInput.type = 'date';
-    dueDateInput.value = todo.dueDate;
+    dueDateInput.value = format(todo.dueDate, 'yyyy-MM-dd');
     dueDateDiv.append(dueDateLabel, dueDateInput);
     clone.append(dueDateDiv);
 
