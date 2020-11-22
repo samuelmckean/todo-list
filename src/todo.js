@@ -12,7 +12,7 @@ const Todo = function(title, description, dueDate, priority, notes, checklist, e
     // edits the properties of a todo object
     this.title = newTitle,
     this.description = newDescription,
-    this.dueDate = newDueDate,
+    this.dueDate = newDueDate || null,
     this.priority = newPriority;
     return this;
   };

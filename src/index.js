@@ -1,6 +1,7 @@
 import { Todo } from "./todo";
 import { Project } from "./project";
 import { app } from "./app";
+import { format } from "date-fns";
 
 // DOM module
 const domModifier = (function() {
@@ -67,9 +68,6 @@ const domModifier = (function() {
   }
 
   const todoUnhover = function() {
-    // removes delete button
-    // document.getElementById('delete-todo').remove();
-
     // removes edit button
     document.getElementById('edit-todo').remove();
   }
@@ -134,10 +132,16 @@ const domModifier = (function() {
       priority.classList.add('priority');
       div.append(priority);
   
-      const dueDate = document.createElement('p');
-      dueDate.innerText = new Date(todo.dueDate).toLocaleDateString();
-      dueDate.classList.add('due-date');
-      div.append(dueDate);  
+      try {
+        // only create due date element if not null
+        const dueDate = document.createElement('p');
+        // format the date using local time
+        dueDate.innerText = 'Due Date: ' + format(new Date(todo.dueDate + 'T00:00:00'), 'MM/dd/yyyy');
+        dueDate.classList.add('due-date');
+        div.append(dueDate);
+      } catch (RangeError) {
+        // if RangeError then do not create element for due date
+      }
     }
 
     return div;
