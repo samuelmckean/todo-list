@@ -68,9 +68,6 @@ const domModifier = (function() {
   }
 
   const todoUnhover = function() {
-    // removes delete button
-    // document.getElementById('delete-todo').remove();
-
     // removes edit button
     document.getElementById('edit-todo').remove();
   }
