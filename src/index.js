@@ -132,11 +132,16 @@ const domModifier = (function() {
       priority.classList.add('priority');
       div.append(priority);
   
-      const dueDate = document.createElement('p');
-      // parses the date in the local timezone 
-      dueDate.innerText = format(todo.dueDate, 'MM/dd/yyyy');
-      dueDate.classList.add('due-date');
-      div.append(dueDate);  
+      try {
+        // only create due date element if not null
+        const dueDate = document.createElement('p');
+        // format the date using local time
+        dueDate.innerText = 'Due Date: ' + format(new Date(todo.dueDate + 'T00:00:00'), 'MM/dd/yyyy');
+        dueDate.classList.add('due-date');
+        div.append(dueDate);
+      } catch (RangeError) {
+        // if RangeError then do not create element for due date
+      }
     }
 
     return div;
@@ -328,7 +333,7 @@ const domModifier = (function() {
     const dueDateInput = document.createElement('input');
     dueDateInput.name = 'due-date';
     dueDateInput.type = 'date';
-    dueDateInput.value = format(todo.dueDate, 'yyyy-MM-dd');
+    dueDateInput.value = todo.dueDate;
     dueDateDiv.append(dueDateLabel, dueDateInput);
     clone.append(dueDateDiv);
 
