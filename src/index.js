@@ -295,13 +295,23 @@ const domModifier = (function() {
     // create button
     const deleteButton = document.createElement('button');
     deleteButton.id = 'delete-todo';
-
     // create img element
     const trashIcon = document.createElement('img');
     trashIcon.src = 'images/trash-icon.png';
     deleteButton.append(trashIcon);
     deleteButton.addEventListener('click', removeTodo);
     clone.prepend(deleteButton);
+
+    // displays cancel icon for closing out of editing mode for todo without saving changes
+    // create button
+    const cancelButton = document.createElement('button');
+    cancelButton.id = 'delete-todo';
+    // create img element
+    const cancelIcon = document.createElement('img');
+    cancelIcon.src = 'images/cancel-icon.png';
+    cancelButton.append(cancelIcon);
+    cancelButton.addEventListener('click', cancelEdit);
+    clone.prepend(cancelButton);
 
     const titleDiv = document.createElement('div');
     titleDiv.id = 'edit-title';
@@ -390,6 +400,11 @@ const domModifier = (function() {
 
     // stop propagation of event to outer div element
     event.stopPropagation();
+  }
+
+  const cancelEdit = function() {
+    // allows the user to cancel out of editing a todo without saving changes
+    updateTodosDOM();
   }
 
   // wire up event listener for Add Project and Add Todo buttons
