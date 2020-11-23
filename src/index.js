@@ -279,8 +279,16 @@ const domModifier = (function() {
     submitDiv.append(submitInput);
     div.append(submitDiv);
 
-    div.addEventListener('mouseenter', todoHover);
-    div.addEventListener('mouseleave', todoUnhover);
+    // displays cancel icon for closing out of new todo without saving changes
+    // create button
+    const cancelButton = document.createElement('button');
+    cancelButton.id = 'cancel-todo';
+    // create img element
+    const cancelIcon = document.createElement('img');
+    cancelIcon.src = 'images/cancel-icon.png';
+    cancelButton.append(cancelIcon);
+    cancelButton.addEventListener('click', cancelEdit);
+    div.prepend(cancelButton);
 
     return div;
   }
@@ -305,7 +313,7 @@ const domModifier = (function() {
     // displays cancel icon for closing out of editing mode for todo without saving changes
     // create button
     const cancelButton = document.createElement('button');
-    cancelButton.id = 'delete-todo';
+    cancelButton.id = 'cancel-todo';
     // create img element
     const cancelIcon = document.createElement('img');
     cancelIcon.src = 'images/cancel-icon.png';
